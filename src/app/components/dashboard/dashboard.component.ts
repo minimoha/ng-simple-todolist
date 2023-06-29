@@ -37,6 +37,20 @@ export class DashboardComponent implements OnInit {
 
   addTask(){
     this.taskObj.task_name = this.addTaskValue;
+    this.crudService.addTask(this.taskObj).subscribe({
+      next: () => {
+        this.ngOnInit();
+        this.addTaskValue = '';
+        alert('Yata!')
+      },
+      error: (err) => {
+        alert(err)
+      }
+    })
+  }
+
+  addTask1(){
+    this.taskObj.task_name = this.addTaskValue;
     this.crudService.addTask(this.taskObj).subscribe(res => {
       this.ngOnInit();
       this.addTaskValue = '';
@@ -60,6 +74,13 @@ export class DashboardComponent implements OnInit {
       this.ngOnInit();
     }, err => {
       alert("Failed to delete task")
+    })
+  }
+
+  deleteManyTask(task: Task){
+    this.crudService.deleteTask(task).subscribe({
+      next: () => { console.log('hello')} ,
+      error: () => { console.log('okay') }
     })
   }
 
